@@ -1,40 +1,24 @@
 const express = require('express')
+const userRouter =  require('./router/user')
 const app = express()
 const server = 3000
 
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 app.get('/', (req, res) => {
-    res.send('Home');
+    const test = {
+        id : 3,
+        name : 'Belajar Node.Js',
+    }
+    res.send(test);
 });
 
 app.get('/about', (req, res) => {
-    res.send('About')
+    res.redirect('https://expressjs.com/en/guide/routing.html')
 })
 
-app.get('/users', (req, res) => {
-    res.send('Get User')
-})
-
-app.post('/users', (req, res) => {
-    res.send('Post User')
-})
-
-app.put('/users/:id', (req, res) => {
-    const id = req.params
-    res.send(id)
-})
-
-app.delete('/users/:userId', (req, res) => {
-    res.send(req.params.userId)
-})
-
-app.delete('/admin/:userId', (req, res) => {
-    const a = req.params
-    res.send(a)
-})
-
-// app.listen(3000, function(){
-//     console.log('server is okay');
-// });
+app.use(userRouter)
 
 app.listen(server, () => {
     console.log(`Server is Okay ${server}`);
