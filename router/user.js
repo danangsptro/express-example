@@ -73,7 +73,7 @@ router.delete('/users/:userId', (req, res) => {
             method: req.method,
             url: req.url
         })
-    }
+    } 
 })
 
 router.delete('/admin/:userId/:booksId', (req, res) => {
