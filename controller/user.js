@@ -13,19 +13,7 @@ let users = [
 
 module.exports = {
     index: (req, res) => {
-        if (users.length > 0) {
-            res.json({
-                status: true,
-                data: users,
-                method: req.method,
-                url: req.url
-            })
-        } else {
-            res.json({
-                status: false,
-                message: 'Data Not Found'
-            })
-        }
+        res.render('pages/user/index', {users})        
     },
     store: (req, res) => {
         users.push(req.body);

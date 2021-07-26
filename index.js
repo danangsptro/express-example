@@ -1,11 +1,11 @@
 const express = require('express')
-const userRouter = require('./router/users')
 const app = express()
+const userRouter = require('./router/users')
 const server = 3000
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(express.static('public'))
+app.use('/assets', express.static('public'))
 
 
 // FUNTION MIDDLEWARE
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
         name: 'Belajar Node.Js',
         date: req.time.toString()
     }
-    res.render('pages/index', {test: test});
+    res.render('pages/index', { test: test });
 });
 
 app.get('/about', (req, res) => {
