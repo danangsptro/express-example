@@ -12,14 +12,15 @@
 <body>
     <%- include ('../components/navbar.ejs') %>
 
-        <a href="/users/create.ejs">Register</a>
-        <h1>Daftar User</h1>
+        <h1>Daftar User (<%= users.length %>) </h1>
         <ul>
+            <% if(users.length > 0) { %>
             <% users.forEach(function(user){ %>
-                <li>
-                    <%=user.name %>
-                </li>
-                <% }); %>
+                <li> <a href="/users/<%=user.id%>"><%=user.name %></a> </li>
+                <% }) %>
+                <% } else { %>
+                    <li>Data Not Found </li>
+                <% } %>
         </ul>
         <footer>
             <p>&copy; 2020 kelas.baledemia</p>

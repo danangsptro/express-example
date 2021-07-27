@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 let users = [
     {
         id: 1,
@@ -12,19 +14,35 @@ let users = [
 ]
 
 module.exports = {
+    // INDEX
     index: (req, res) => {
         res.render('pages/user/index', {users})        
     },
-    store: (req, res) => {
-        users.push(req.body);
-        res.json({
-            status: true,
-            data: users,
-            message: "Data Berhasil Di simpan",
-            method: req.method,
-            url: req.url
-        })
+    // CREATE
+    create: (req, res) => {
+        res.render('pages/user/create')
     },
+    // STORE
+    store: (req, res) => {
+        users.push({
+            id: uuidv4(),
+            name: req.body.name,
+            email: req.body.email
+        })
+        res.redirect('/users')
+    },
+    // SHOW
+    show: (req, res) => {
+        const id = req.params.id
+        
+        const data = users.filter(user => {
+            return user.id == id
+        })
+
+        // res.send(data)
+        res.render('pages/user/show', {user: data})
+    },
+    // UPDATE
     update: (req, res) => {
         const id = req.params.id
         users.filter(user => {
@@ -43,6 +61,7 @@ module.exports = {
             url: req.url
         })
     },
+    // DELETE
     delete: (req, res) => {
         let id = req.params.userId
 

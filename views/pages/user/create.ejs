@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/style.css">
+    <title>Register</title>
+</head>
+
+<body>
+    <%- include ('../components/navbar.ejs') %>
+
+        <form action="/users" method="POST">
+            <h3>Create User</h3>
+            <hr>
+            <div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+            </div>
+
+            <div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" name="email" class="form-control">
+                </div>
+            </div>
+
+            <button type="submint" class="btn btn-success">Send</button>
+            <a href="/users" type="submint" class="btn btn-dark">Back</a>
+        </form>
+</body>
+
+</html>
