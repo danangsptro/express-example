@@ -1,22 +1,18 @@
-const { v4: uuidv4 } = require('uuid');
+const { request } = require('express');
+const User = require('../models/user')
 
-let users = [
-    {
-        id: 1,
-        name: 'Danang',
-        email: 'danang@gmail.com'
-    },
-    {
-        id: 2,
-        name: 'Testing',
-        email: 'testing@gmail.com'
-    }
-]
 
 module.exports = {
     // INDEX
     index: (req, res) => {
-        res.render('pages/user/index', {users})        
+        User.find(function(err, users){
+            if(err){
+                console.log(err)
+            }else{
+                console.log(users)
+            }
+            res.render('pages/user/index', { users })
+        })
     },
     // CREATE
     create: (req, res) => {
@@ -24,23 +20,48 @@ module.exports = {
     },
     // STORE
     store: (req, res) => {
-        users.push({
-            id: uuidv4(),
+        // Cara 1   
+        // const user = new User({
+        //     name: req.body.name,
+        //     email: req.body.email,
+        //     password: req.body.password
+        // })
+
+        // user.save(function (err, result) {
+        //     if (err) {
+        //         console.log(err)
+        //     } else {
+        //         console.log(result)
+        //     }
+        //     res.redirect('/users')
+
+        // })
+
+        // Cara 2
+        const user = User.create({
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            password: req.body.password
+        }, function (err, result) {
+            if(err){
+                console.log(err)
+            } else{
+                console.log(result)
+            }
+            res.redirect('/users')
         })
-        res.redirect('/users')
+
     },
     // SHOW
     show: (req, res) => {
         const id = req.params.id
-        
+
         const data = users.filter(user => {
             return user.id == id
         })
 
         // res.send(data)
-        res.render('pages/user/show', {user: data})
+        res.render('pages/user/show', { user: data })
     },
     // UPDATE
     update: (req, res) => {
