@@ -5,10 +5,14 @@ const User = require('../models/user')
 module.exports = {
     // INDEX
     index: (req, res) => {
-        User.find(function(err, users){
-            if(err){
+        let keyword = {}
+        if (req.query.keyword) {
+            keyword = {name: {$regex: req.query.keyword}}
+        }
+        User.find(keyword ,"name _id", function (err, users) {
+            if (err) {
                 console.log(err)
-            }else{
+            } else {
                 console.log(users)
             }
             res.render('pages/user/index', { users })
@@ -43,9 +47,9 @@ module.exports = {
             email: req.body.email,
             password: req.body.password
         }, function (err, result) {
-            if(err){
+            if (err) {
                 console.log(err)
-            } else{
+            } else {
                 console.log(result)
             }
             res.redirect('/users')
@@ -56,12 +60,20 @@ module.exports = {
     show: (req, res) => {
         const id = req.params.id
 
-        const data = users.filter(user => {
-            return user.id == id
+        // const data = users.filter(user => {
+        //     return user.id == id
+        // })
+
+        User.findById(id, function (err, result) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(result)
+            }
+            res.render('pages/user/show', { user: result })
         })
 
         // res.send(data)
-        res.render('pages/user/show', { user: data })
     },
     // UPDATE
     update: (req, res) => {

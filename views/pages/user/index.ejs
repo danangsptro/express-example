@@ -13,10 +13,14 @@
     <%- include ('../components/navbar.ejs') %>
 
         <h1>Daftar User (<%= users.length %>) </h1>
+        <form action="/users">
+            <input type="text" name="keyword">
+            <button type="submit">Cari</button>
+        </form>
         <ul>
             <% if(users.length > 0) { %>
             <% users.forEach(function(user){ %>
-                <li> <a href="/users/<%=user.id%>"><%=user.name %></a> </li>
+                <li> <a href="/users/<%=user._id%>"><%=user.name %></a> </li>
                 <% }) %>
                 <% } else { %>
                     <li>Data Not Found </li>
