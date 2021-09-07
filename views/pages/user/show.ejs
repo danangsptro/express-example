@@ -14,8 +14,10 @@
 <body>
     <%- include ('../components/navbar.ejs') %>
     <hr>
-        <table class="table text-center">
-            <h4>Table Show</h4>
+    <table class="table text-center">
+        <h4>Table Show</h4>
+        <a href="/users" class="btn btn-dark">Back</a>
+        <br><br>
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -29,6 +31,10 @@
                 </tr>
             </tbody>
         </table>
+
+        <a href="/users/<%= user._id %>/edit">Edit</a>
+        <a href="/users/id">Delete</a>
+        
         <footer class="mt-4">
             <p>&copy; 2020 kelas.baledemia</p>
         </footer>

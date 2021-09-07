@@ -7,16 +7,31 @@ module.exports = {
     index: (req, res) => {
         let keyword = {}
         if (req.query.keyword) {
-            keyword = {name: {$regex: req.query.keyword}}
+            keyword = { name: { $regex: req.query.keyword } }
         }
-        User.find(keyword ,"name _id", function (err, users) {
+
+        // Cara 1
+        // User.find(keyword ,"name _id", function (err, users) {
+        //     if (err) {
+        //         console.log(err)
+        //     } else {
+        //         console.log(users)
+        //     }
+        //     res.render('pages/user/index', { users })
+        // })
+
+
+        // Cara 2
+        const Query = User.find(keyword)
+        Query.select('name _id')
+        Query.exec(function (err, users) {
             if (err) {
                 console.log(err)
             } else {
                 console.log(users)
             }
             res.render('pages/user/index', { users })
-        })
+        });
     },
     // CREATE
     create: (req, res) => {
@@ -94,6 +109,20 @@ module.exports = {
             url: req.url
         })
     },
+
+    // Edit
+    edit: (req, res) => {
+        const id = req.params.id
+        User.findById(id, function (err, result) {
+            if(err) {
+                console.log(err)
+            } else {
+                console.log(result)
+            }
+            res.render('pages/user/edit', {user: result})
+        });
+    },
+
     // DELETE
     delete: (req, res) => {
         let id = req.params.userId
